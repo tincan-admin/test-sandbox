@@ -29,6 +29,16 @@ app.post("/items", (req, res) => {
   res.status(201).json(item);
 });
 
+// PUT /items/:id
+app.put("/items/:id", (req, res) => {
+  const item = items.find((i) => i.id === parseInt(req.params.id));
+  if (!item) return res.status(404).json({ error: "Not found" });
+  const { name } = req.body;
+  if (!name) return res.status(400).json({ error: "Name is required" });
+  item.name = name;
+  res.json(item);
+});
+
 // DELETE /items/:id
 app.delete("/items/:id", (req, res) => {
   const index = items.findIndex((i) => i.id === parseInt(req.params.id));

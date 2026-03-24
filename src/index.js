@@ -22,11 +22,21 @@ app.get("/items/:id", (req, res) => {
 
 // POST /items
 app.post("/items", (req, res) => {
-  const { name } = req.body;
+  const { name, price } = req.body;
   if (!name) return res.status(400).json({ error: "Name is required" });
-  const item = { id: nextId++, name };
+  const item = { id: nextId++, name, ...(price !== undefined && { price }) };
   items.push(item);
   res.status(201).json(item);
+});
+
+// PATCH /items/:id
+app.patch("/items/:id", (req, res) => {
+  const item = items.find((i) => i.id === parseInt(req.params.id));
+  if (!item) return res.status(404).json({ error: "Not found" });
+  const { name, price } = req.body;
+  if (name !== undefined) item.name = name;
+  if (price !== undefined) item.price = price;
+  res.json(item);
 });
 
 // DELETE /items/:id

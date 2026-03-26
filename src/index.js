@@ -4,6 +4,11 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 
+// GET /hello
+app.get("/hello", (req, res) => {
+  res.json({ message: "Hello, world!" });
+});
+
 // In-memory store
 const items = [];
 let nextId = 1;

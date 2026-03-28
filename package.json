@@ -9,5 +9,14 @@
   },
   "dependencies": {
     "express": "^4.21.0"
+  },
+  "lint-staged": {
+    "*.js": [
+      "node --check"
+    ]
+  },
+  "devDependencies": {
+    "husky": "^4.3.8",
+    "lint-staged": "^16.4.0"
   }
 }

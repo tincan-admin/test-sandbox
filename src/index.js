@@ -1,7 +1,9 @@
 const express = require("express");
+const requestLogger = require("./middleware/logger");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.use(requestLogger);
 app.use(express.json());
 
 // In-memory store

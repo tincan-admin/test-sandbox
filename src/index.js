@@ -1,8 +1,10 @@
 const express = require("express");
+const rateLimiter = require("./middleware/rateLimiter.js");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
+app.use(rateLimiter());
 
 // In-memory store
 const items = [];

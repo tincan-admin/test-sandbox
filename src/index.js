@@ -1,8 +1,15 @@
 const express = require("express");
+const validate = require("./middleware/validate");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
+
+// Schema for POST /users
+const createUserSchema = {
+  name: { type: "string", required: true, minLength: 1, maxLength: 100 },
+  email: { type: "string", required: true, pattern: /@/ },
+};
 
 // In-memory store
 const items = [];
@@ -35,6 +42,18 @@ app.delete("/items/:id", (req, res) => {
   if (index === -1) return res.status(404).json({ error: "Not found" });
   items.splice(index, 1);
   res.status(204).send();
+});
+
+// In-memory users store
+const users = [];
+let nextUserId = 1;
+
+// POST /users
+app.post("/users", validate(createUserSchema), (req, res) => {
+  const { name, email } = req.body;
+  const user = { id: nextUserId++, name, email };
+  users.push(user);
+  res.status(201).json(user);
 });
 
 if (require.main === module) {

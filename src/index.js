@@ -4,6 +4,24 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 
+const pkg = require("../package.json");
+
+const MEMORY_THRESHOLD_MB = 512;
+
+// GET /health
+app.get("/health", (req, res) => {
+  const memoryMB = process.memoryUsage().rss / 1024 / 1024;
+  const status = memoryMB > MEMORY_THRESHOLD_MB ? "degraded" : "ok";
+
+  res.json({
+    status,
+    uptime: process.uptime(),
+    timestamp: new Date().toISOString(),
+    version: pkg.version,
+    memory: Math.round(memoryMB * 100) / 100,
+  });
+});
+
 // In-memory store
 const items = [];
 let nextId = 1;

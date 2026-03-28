@@ -1,4 +1,5 @@
 const express = require("express");
+const errorHandler = require("./middleware/errorHandler");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -36,6 +37,9 @@ app.delete("/items/:id", (req, res) => {
   items.splice(index, 1);
   res.status(204).send();
 });
+
+// Error handling middleware (must be last)
+app.use(errorHandler);
 
 if (require.main === module) {
   app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

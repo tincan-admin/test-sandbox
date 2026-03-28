@@ -5,9 +5,19 @@
   "main": "src/index.js",
   "scripts": {
     "start": "node src/index.js",
-    "test": "node --test src/**/*.test.js"
+    "test": "node --test src/**/*.test.js",
+    "prepare": "husky"
   },
   "dependencies": {
     "express": "^4.21.0"
+  },
+  "lint-staged": {
+    "*.js": [
+      "node --check"
+    ]
+  },
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0"
   }
 }

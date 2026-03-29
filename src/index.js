@@ -29,6 +29,11 @@ app.post("/items", (req, res) => {
   res.status(201).json(item);
 });
 
+// GET /timestamp
+app.get("/timestamp", (req, res) => {
+  res.json({ timestamp: Math.floor(Date.now() / 1000) });
+});
+
 // DELETE /items/:id
 app.delete("/items/:id", (req, res) => {
   const index = items.findIndex((i) => i.id === parseInt(req.params.id));

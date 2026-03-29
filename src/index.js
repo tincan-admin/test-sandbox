@@ -4,6 +4,11 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 
+// GET /version
+app.get("/version", (req, res) => {
+  res.json({ version: "1.0.0" });
+});
+
 // In-memory store
 const items = [];
 let nextId = 1;

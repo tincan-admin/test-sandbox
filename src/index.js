@@ -29,6 +29,12 @@ app.post("/items", (req, res) => {
   res.status(201).json(item);
 });
 
+// GET /greet/:name
+app.get("/greet/:name", (req, res) => {
+  const { name } = req.params;
+  res.json({ message: `Hello, ${name}! Welcome to Knight.` });
+});
+
 // DELETE /items/:id
 app.delete("/items/:id", (req, res) => {
   const index = items.findIndex((i) => i.id === parseInt(req.params.id));

@@ -1,0 +1,42 @@
+Stress Test R-117
+=================
+
+Target: Items API (Express CRUD)
+Type: Stress / Load test
+Reference: R-117
+
+Scenarios
+---------
+1. GET /items - List all items under sustained load
+   - Concurrent users: 100, 500, 1000
+   - Duration: 60s per tier
+   - Expected: p95 < 200ms, 0% error rate
+
+2. POST /items - Create items under high concurrency
+   - Concurrent users: 50, 200, 500
+   - Duration: 60s per tier
+   - Payload: { "name": "stress-test-item-{{$randomInt}}" }
+   - Expected: p95 < 300ms, 0% error rate
+
+3. GET /items/:id - Fetch individual items under load
+   - Concurrent users: 100, 500, 1000
+   - Duration: 60s per tier
+   - Expected: p95 < 150ms, 0% error rate
+
+4. DELETE /items/:id - Delete items under concurrent access
+   - Concurrent users: 50, 200
+   - Duration: 60s per tier
+   - Expected: p95 < 250ms, 404s handled gracefully
+
+5. Mixed workload - Combined CRUD operations
+   - Distribution: 50% GET list, 20% GET by id, 20% POST, 10% DELETE
+   - Concurrent users: 200, 500, 1000
+   - Duration: 120s per tier
+   - Expected: p95 < 300ms, error rate < 0.1%
+
+Pass Criteria
+-------------
+- All endpoints respond within p95 latency targets
+- No server crashes or unhandled exceptions under peak load
+- Memory usage remains stable (no leaks over sustained test duration)
+- Error rate stays below defined thresholds per scenario

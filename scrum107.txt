@@ -1,0 +1,1 @@
+SCRUM-107: Concurrency test SCRUM-107

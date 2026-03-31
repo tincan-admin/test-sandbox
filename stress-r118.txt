@@ -1,0 +1,39 @@
+Stress Test R-118
+=================
+
+Target: Items CRUD API
+Type: Stress / Load Test
+
+Scenarios
+---------
+
+1. Concurrent POST /items
+   - Simulate 100 concurrent requests creating items
+   - Verify all items are created with unique IDs
+   - Expected: 201 status for all requests, no duplicate IDs
+
+2. Rapid GET /items under load
+   - Pre-populate 1000 items
+   - Simulate 500 concurrent GET /items requests
+   - Expected: 200 status, consistent item count across responses
+
+3. Mixed read/write operations
+   - Simulate 200 concurrent requests: 40% POST, 40% GET, 20% DELETE
+   - Verify no 500-level errors
+   - Expected: All responses return appropriate status codes
+
+4. Sequential create-read-delete cycle
+   - Repeat 500 times: POST an item, GET it by ID, DELETE it
+   - Expected: 201, 200, 204 status codes respectively for each cycle
+
+5. Bulk deletion under load
+   - Pre-populate 500 items
+   - Simulate 500 concurrent DELETE requests
+   - Expected: Each item deleted exactly once (204), subsequent attempts return 404
+
+Pass Criteria
+-------------
+- Zero 500-level errors across all scenarios
+- All operations return expected status codes
+- No data corruption (duplicate IDs, phantom items)
+- Response times remain under 500ms per request at peak load

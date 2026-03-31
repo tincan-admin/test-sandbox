@@ -1,0 +1,23 @@
+Stress Test R-123
+=================
+
+Target: Items CRUD API (Express)
+
+Test Scenarios:
+1. Bulk POST /items — create 1000 items rapidly
+2. Concurrent GET /items — 500 parallel reads
+3. Concurrent GET /items/:id — 500 parallel reads by ID
+4. Bulk DELETE /items/:id — delete 1000 items rapidly
+5. Mixed workload — simultaneous create, read, and delete operations
+
+Expected Behavior:
+- All POST requests return 201 with valid item JSON
+- All GET requests return 200 with correct data
+- All DELETE requests return 204
+- No data corruption under concurrent access
+- Server remains responsive throughout
+
+Environment:
+- Node.js with Express 4.x
+- In-memory data store
+- Default port 3000
